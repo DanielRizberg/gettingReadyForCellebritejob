@@ -4,7 +4,7 @@ import { distinctUntilChanged, fromEvent, throttleTime } from "rxjs";
 
 export class Search extends Component {
  
-  des
+ 
   constructor(props:any) {
     super(props)
     
