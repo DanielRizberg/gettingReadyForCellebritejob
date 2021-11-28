@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using playGroundWPF.Configuration;
 using playGroundWPF.Interfaces;
 using playGroundWPF.services;
 using playGroundWPF.View;
@@ -47,9 +48,11 @@ namespace playGroundWPF
 
         private void ConfigureServices(ServiceCollection services)
         {
-           
+
+            services.Configure<movieServiceConfig>(Configuration.GetSection("movieServiceConfig"));
             services.AddSingleton(typeof(IMovieService), typeof(movieService));
             services.AddSingleton(pr => {
+
                 var movieService = pr.GetService<IMovieService>();
 
                 return new MainWindowViewModel(movieService);
