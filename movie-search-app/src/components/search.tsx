@@ -1,15 +1,22 @@
 import React  from "react";
 import { ChangeEvent, Component } from "react";
+import { distinctUntilChanged, fromEvent, throttleTime } from "rxjs";
 
 export class Search extends Component {
  
-  initialState = {
+  des
+  constructor(props:any) {
+    super(props)
+    
+   let obs$=fromEvent(this.searchBox.current as HTMLInputElement,'input').pipe(distinctUntilChanged(),throttleTime(1000)).subscribe(x=>{
+
+   })
+  }
+ 
+  state = {
     searchValue: "",
   };
-
-  state = this.initialState;
-
-   searchBox = React.createRef<HTMLInputElement>();;
+   searchBox = React.createRef<HTMLInputElement>();
 
   handleChange = (event: ChangeEvent) => {
     const {name,value} = event.target as HTMLInputElement;
@@ -18,7 +25,7 @@ export class Search extends Component {
       [name]: value,
     });
 
- 
+
   };
   render() {
     const { searchValue } = this.state;
