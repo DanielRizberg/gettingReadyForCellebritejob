@@ -1,15 +1,19 @@
+import React  from "react";
 import { ChangeEvent, Component } from "react";
 
 export class Search extends Component {
+ 
   initialState = {
     searchValue: "",
   };
 
   state = this.initialState;
 
+   searchBox = React.createRef<HTMLInputElement>();;
+
   handleChange = (event: ChangeEvent) => {
     const {name,value} = event.target as HTMLInputElement;
-console.log(name)
+
     this.setState({
       [name]: value,
     });
@@ -29,6 +33,7 @@ console.log(name)
               value={searchValue}
               name="searchValue"
               id="searchValue"
+              ref={this.searchBox}
               onChange={this.handleChange}
             ></input>
           </div>
