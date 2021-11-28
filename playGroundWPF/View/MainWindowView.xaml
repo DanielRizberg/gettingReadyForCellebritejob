@@ -71,8 +71,8 @@
         <TextBox  Text="{Binding SearchValue, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" Grid.Row="0" Margin="3" Padding="{Binding ElementName=searchIcon, Path=ActualWidth ,Converter={StaticResource paddingForTextSearchConvertor}}" HorizontalAlignment="Stretch" 
                       VerticalContentAlignment="Center"
                       VerticalAlignment="Stretch" 
-                      Background="Transparent"
-                     
+                      Background="#c71c1e"
+                     Opacity="0.8"
                     >
            
             <i:Interaction.Triggers>
@@ -86,16 +86,7 @@
                     <i:InvokeCommandAction Command="{Binding searchValueChanged}"/>
                 </i:EventTrigger>
             </i:Interaction.Triggers>
-            <TextBox.Foreground>
-                <LinearGradientBrush>
-                    <GradientStop Color="White" Offset="0.0"/>
-                  
-                    <GradientStop Color="DarkSlateGray" Offset="0.6"/>
-                    
-                    <GradientStop Color="White" Offset="0.8"/>
-
-                </LinearGradientBrush>
-            </TextBox.Foreground>
+          
             </TextBox>
 
         <fa:ImageAwesome Icon="Search"  Grid.Row="0" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="15,10" Name="searchIcon" />
