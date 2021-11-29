@@ -77,7 +77,7 @@ export function Search(props: searchProps) {
             <input
               type="search"
               placeholder="type here to search a movie"
-              className="form-control  my-2"
+              className="form-control  my-2 ps-5"
               value={searchValue}
               name="searchValue"
               id="searchValue"
