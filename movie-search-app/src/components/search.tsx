@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import {
   catchError,
   distinctUntilChanged,
+  filter,
   fromEvent,
   map,
   of,
@@ -13,23 +14,22 @@ import { fromFetch } from "rxjs/fetch";
 import { movieData } from "../models/movieData";
 
 import { searchProps } from "../models/searchModel";
-
+import "./search.css";
 export function Search(props: searchProps) {
   const [searchValue, setSearchValue] = useState("");
 
   const textEl = React.useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    
     const sub = fromEvent(textEl.current as HTMLInputElement, "input")
       .pipe(
         map((x) => (x.target as any).value as string),
-        distinctUntilChanged(),
         throttleTime(1000),
+        distinctUntilChanged(),
+        filter((x) => x !== ""),
         switchMap((val) => getData(val))
       )
       .subscribe((value) => {
-       
         props.newData(value as any[]);
       });
 
@@ -40,10 +40,12 @@ export function Search(props: searchProps) {
       `https://imdb-internet-movie-database-unofficial.p.rapidapi.com/search/${val}`,
       {
         method: "GET",
-        "headers": {
-          "x-rapidapi-host": "imdb-internet-movie-database-unofficial.p.rapidapi.com",
-          "x-rapidapi-key": "a5abc19a4bmsh6004678e99f8413p1a46a7jsn35b65af042e1"
-        }
+        headers: {
+          "x-rapidapi-host":
+            "imdb-internet-movie-database-unofficial.p.rapidapi.com",
+          "x-rapidapi-key":
+            "a5abc19a4bmsh6004678e99f8413p1a46a7jsn35b65af042e1",
+        },
       }
     ).pipe(
       switchMap((res) => {
@@ -69,21 +71,24 @@ export function Search(props: searchProps) {
     <div className="container-fluid">
       <div className="row">
         <div className="col text-start">
-          <input
-            type="search"
-            placeholder="type here to search a movie"
-            className="form-control  my-2"
-            value={searchValue}
-            name="searchValue"
-            id="searchValue"
-            ref={textEl}
-            onChange={(e) => {
-              setSearchValue(e.target.value);
-            }}
-          ></input>
+          <div className="search">
+         
+            <i className="fa fa-search"></i>
+            <input
+              type="search"
+              placeholder="type here to search a movie"
+              className="form-control  my-2"
+              value={searchValue}
+              name="searchValue"
+              id="searchValue"
+              ref={textEl}
+              onChange={(e) => {
+                setSearchValue(e.target.value);
+              }}
+            ></input>
+          </div>
         </div>
       </div>
-     
     </div>
   );
 }
