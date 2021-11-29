@@ -17,7 +17,7 @@ export function DisplayMovieData(props: displayMovieModel) {
               {props.data.map((val) => (
                 <tr key={val.id}>
                   <td className="text-center align-middle">{val.title}</td>
-                  <td style={{height:'400px',width:'auto'}}>
+                  <td style={{height:'20vh',width:'20vw'}}>
                     <img src={val.image} alt="" className="img img-thumbnail img-fluid"/>
                   </td>
                 </tr>
