@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Observable } from "rx";
+
 import {
   catchError,
   distinctUntilChanged,
@@ -82,9 +82,7 @@ export function Search(props: searchProps) {
           ></input>
         </div>
       </div>
-      <div className="row">
-        <div className="col">{searchValue}</div>
-      </div>
+     
     </div>
   );
 }
