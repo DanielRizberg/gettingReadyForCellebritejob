@@ -1,54 +1,52 @@
-import React  from "react";
-import { ChangeEvent, Component } from "react";
-import { distinctUntilChanged, fromEvent, throttleTime } from "rxjs";
-
-export class Search extends Component {
- 
- 
-  constructor(props:any) {
-    super(props)
-    
-   let obs$=fromEvent(this.searchBox.current as HTMLInputElement,'input').pipe(distinctUntilChanged(),throttleTime(1000)).subscribe(x=>{
-
-   })
-  }
- 
-  state = {
-    searchValue: "",
-  };
-   searchBox = React.createRef<HTMLInputElement>();
-
-  handleChange = (event: ChangeEvent) => {
-    const {name,value} = event.target as HTMLInputElement;
-
-    this.setState({
-      [name]: value,
-    });
+import React, { useEffect, useState } from "react";
+import { distinctUntilChanged, fromEvent, map, throttleTime } from "rxjs";
+import { searchProps } from "../models/searchModel";
 
 
-  };
-  render() {
-    const { searchValue } = this.state;
-    return (
-      <div className="container-fluid">
-        <div className="row">
-          <div className="col text-start">
-            <input
-              type="search"
-              placeholder="type here to search a movie"
-              className="form-control  my-2"
-              value={searchValue}
-              name="searchValue"
-              id="searchValue"
-              ref={this.searchBox}
-              onChange={this.handleChange}
-            ></input>
-          </div>
-        </div>
-        <div className="row">
-          <div className="col">{searchValue}</div>
+export function Search(props: searchProps) {
+  const [searchValue, setSearchValue] = useState('');
+
+  const textEl = React.useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    const sub = fromEvent(textEl.current as HTMLInputElement, "input")
+      .pipe(
+        map((x) => (x.target as any).value as string),
+        distinctUntilChanged(),
+        throttleTime(1000)
+      )
+      .subscribe((value) => {
+       console.log(value)
+       props.newData(['hello'])
+      });
+
+    return () => sub.unsubscribe();
+  }, []);
+
+  return (
+    <div className="container-fluid">
+      <div className="row">
+        <div className="col text-start">
+          <input
+            type="search"
+            placeholder="type here to search a movie"
+            className="form-control  my-2"
+            value={searchValue}
+            name="searchValue"
+            id="searchValue"
+            ref={textEl}
+            onChange= {e=> 
+              {
+                setSearchValue(e.target.value);
+               
+            }
+          }
+          ></input>
         </div>
       </div>
-    );
-  }
+      <div className="row">
+        <div className="col">{searchValue}</div>
+      </div>
+    </div>
+  );
 }
