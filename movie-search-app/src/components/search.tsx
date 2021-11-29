@@ -20,6 +20,7 @@ export function Search(props: searchProps) {
   const textEl = React.useRef<HTMLInputElement>(null);
 
   useEffect(() => {
+    
     const sub = fromEvent(textEl.current as HTMLInputElement, "input")
       .pipe(
         map((x) => (x.target as any).value as string),
@@ -33,7 +34,7 @@ export function Search(props: searchProps) {
       });
 
     return () => sub.unsubscribe();
-  }, []);
+  }, [props]);
   const getData = (val: string) => {
     let obs$ = fromFetch(
       `https://imdb-internet-movie-database-unofficial.p.rapidapi.com/search/${val}`,
