@@ -6,6 +6,7 @@ import {
   filter,
   fromEvent,
   map,
+  merge,
   of,
   switchMap,
   throttleTime,
@@ -19,11 +20,25 @@ export function Search(props: searchProps) {
   const [searchValue, setSearchValue] = useState("");
 
   const textEl = React.useRef<HTMLInputElement>(null);
-
+  const buttonEl = React.useRef<HTMLButtonElement>(null);
   useEffect(() => {
-    const sub = fromEvent(textEl.current as HTMLInputElement, "input")
+    const ClickEvent = fromEvent(
+      buttonEl.current as HTMLInputElement,
+      "click"
+    ).pipe(map((x) => searchValue));
+    const inputEvent = fromEvent(
+      textEl.current as HTMLInputElement,
+      "input"
+    ).pipe(map((x) => (x.target as any).value as string));
+    const enterEvent = fromEvent(
+      textEl.current as HTMLInputElement,
+      "keyup"
+    ).pipe(
+      filter((e) => (e as KeyboardEvent).key === "Enter"),
+      map((x) => (x.target as any).value as string)
+    );
+    const sub = merge(inputEvent, enterEvent, ClickEvent)
       .pipe(
-        map((x) => (x.target as any).value as string),
         throttleTime(1000),
         distinctUntilChanged(),
         filter((x) => x !== ""),
@@ -71,13 +86,20 @@ export function Search(props: searchProps) {
     <div className="container-fluid">
       <div className="row">
         <div className="col text-start">
-          <div className="search">
-         
-            <i className="fa fa-search"></i>
+          <div className="input-group my-3">
+            <button
+              className="btn btn-outline-secondary btn-sm"
+              type="button"
+              id="searchButton"
+              ref={buttonEl}
+            >
+              <i className="fa fa-search"></i>
+            </button>
+
             <input
-              type="search"
+              type="text"
               placeholder="type here to search a movie"
-              className="form-control  my-2 ps-5"
+              className="form-control "
               value={searchValue}
               name="searchValue"
               id="searchValue"
