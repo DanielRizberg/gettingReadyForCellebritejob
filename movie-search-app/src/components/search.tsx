@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 
 import {
   catchError,
+  delay,
   distinctUntilChanged,
   filter,
   fromEvent,
@@ -9,6 +10,7 @@ import {
   merge,
   of,
   switchMap,
+  tap,
   throttleTime,
 } from "rxjs";
 import { fromFetch } from "rxjs/fetch";
@@ -42,10 +44,16 @@ export function Search(props: searchProps) {
         throttleTime(1000),
         distinctUntilChanged(),
         filter((x) => x !== ""),
-        switchMap((val) => getData(val))
+        switchMap((val) =>
+          getData(val).pipe(
+            tap(() => {
+              props.loaderHandler(true);
+            })
+          )
+        )
       )
       .subscribe((value) => {
-        props.newData(value as any[]);
+       props.newData(value as any[])
       });
 
     return () => sub.unsubscribe();
