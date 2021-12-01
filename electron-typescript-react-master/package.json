@@ -26,7 +26,7 @@
     "@babel/preset-env": "7.14.5",
     "@babel/preset-react": "7.14.5",
     "@babel/preset-typescript": "7.14.5",
-    "@electron-forge/cli": "6.0.0-beta.57",
+    "@electron-forge/cli": "^6.0.0-beta.57",
     "@electron-forge/maker-deb": "6.0.0-beta.57",
     "@electron-forge/maker-rpm": "6.0.0-beta.57",
     "@electron-forge/maker-squirrel": "6.0.0-beta.57",
@@ -65,7 +65,7 @@
   "config": {
     "forge": {
       "packagerConfig": {
-        "name": "Electron starter",
+        "name": "Electron-starter",
         "executableName": "electron-starter",
         "icon": "assets/icon",
         "extraResource": [
@@ -97,7 +97,7 @@
         {
           "name": "@electron-forge/maker-squirrel",
           "config": {
-            "name": "Electron Starter"
+            "name": "Electron-Starter"
           }
         },
         {
