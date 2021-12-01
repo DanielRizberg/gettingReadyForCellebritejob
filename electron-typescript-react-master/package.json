@@ -10,7 +10,9 @@
     "make": "electron-forge make",
     "release": "electron-forge publish",
     "lint": "eslint . --ext js,ts",
-    "test": "jest"
+    "test": "jest",
+    "make-linux": "electron-forge make --platform=linux --targets=@electron-forge/maker-deb",
+    "make-mac": "electron-forge make --platform=darwin"
   },
   "keywords": [],
   "license": "MIT",
