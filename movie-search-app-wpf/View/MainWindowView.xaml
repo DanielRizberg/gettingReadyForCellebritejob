@@ -13,7 +13,7 @@
         >
 
     <Window.Background>
-        <ImageBrush ImageSource="/playGroundWPF;component/popcorn-red-background-box-movie.jpg" Stretch="UniformToFill"/>
+        <ImageBrush ImageSource="/movie_search_app_wpf;component/popcorn-red-background-box-movie.jpg" Stretch="UniformToFill"/>
     </Window.Background>
     <Window.Resources>
         

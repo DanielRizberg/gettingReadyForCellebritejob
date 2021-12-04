@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "playGroundWPF", "playGroundWPF\playGroundWPF.csproj", "{81115786-06A4-4705-AAB3-A4E96CE74CC2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "movie_search_app_wpf", "movie-search-app-wpf\movie_search_app_wpf.csproj", "{81115786-06A4-4705-AAB3-A4E96CE74CC2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "testApi", "testApi\testApi.csproj", "{9C87CBC8-7FA2-4621-AD92-7E730531D526}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "testApi", "testApi\testApi.csproj", "{9C87CBC8-7FA2-4621-AD92-7E730531D526}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
