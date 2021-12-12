@@ -54,7 +54,7 @@ export function Search(props: searchProps) {
       .subscribe((value) => {
         props.newData(value as any[]);
       });
-console.log('in effect')
+
     return () => sub.unsubscribe();
   },[]);
   const getData = (val: string) => {
