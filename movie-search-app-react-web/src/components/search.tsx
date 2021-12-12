@@ -52,11 +52,11 @@ export function Search(props: searchProps) {
         )
       )
       .subscribe((value) => {
-       props.newData(value as any[])
+        props.newData(value as any[]);
       });
 
     return () => sub.unsubscribe();
-  }, [props]);
+  },[props,searchValue]);
   const getData = (val: string) => {
     let obs$ = fromFetch(
       `https://imdb-internet-movie-database-unofficial.p.rapidapi.com/search/${val}`,
@@ -104,6 +104,7 @@ export function Search(props: searchProps) {
             </button>
 
             <input
+              list="favorits"
               type="text"
               placeholder="type here to search a movie"
               className="form-control "
@@ -115,6 +116,14 @@ export function Search(props: searchProps) {
                 setSearchValue(e.target.value);
               }}
             ></input>
+            <datalist  id="favorits">
+              <option className="w-100 h-100" value="star trek"></option>
+              <option value="star wars"></option>
+              <option value="stargate"></option>
+              <option value="the expanse"></option>
+              <option value="matrix"></option>
+              <option value="avengrs"></option>
+            </datalist>
           </div>
         </div>
       </div>
