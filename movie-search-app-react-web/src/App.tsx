@@ -10,11 +10,11 @@ function App() {
     loading: false,
   });
   const newData = (val: Array<movieData>) => {
-    console.log(val)
+   // console.log(val)
     seStateValue({  data: val, loading: false });
   };
   const loaderHandler = (val: boolean) => {
-    console.log(val)
+  //  console.log(val)
     seStateValue({ ...stateValue, loading: val });
   };
   return (
