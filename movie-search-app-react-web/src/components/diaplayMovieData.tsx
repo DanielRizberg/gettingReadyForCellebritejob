@@ -1,8 +1,21 @@
 import { displayMovieModel } from "../models/displayMovieModel";
+import { movieData } from "../models/movieData";
 import { Rating } from "./rating";
 
 export function DisplayMovieData(props: displayMovieModel) {
-  
+  const getValueFromStorage = (movieTitle: string) => {
+    let value = localStorage.getItem(movieTitle);
+    if (value) {
+      return Number(value);
+    }
+
+    return 0;
+  };
+  function setRatingValue(val: movieData): (value: number) => void {
+    return (rating) => {
+      localStorage.setItem(val.title, rating.toString());
+    };
+  }
   return (
     <div
       className="container-fluid"
@@ -31,7 +44,11 @@ export function DisplayMovieData(props: displayMovieModel) {
                     />
                   </td>
                   <td className="text-center align-middle">
-                   <Rating value={val.rating?val.rating:0} maxValue={5} valueChange={val=>{}}></Rating>
+                    <Rating
+                      value={getValueFromStorage(val.title)}
+                      maxValue={5}
+                      valueChange={setRatingValue(val)}
+                    ></Rating>
                   </td>
                 </tr>
               ))}
