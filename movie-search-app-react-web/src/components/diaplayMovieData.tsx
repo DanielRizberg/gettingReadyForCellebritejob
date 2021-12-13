@@ -1,11 +1,10 @@
 import { useState } from "react";
 import { displayMovieModel } from "../models/displayMovieModel";
-import { movieData } from "../models/movieData";
 import { MovieDetails } from "./movieDetails";
 import { Rating } from "./rating";
 
 export function DisplayMovieData(props: displayMovieModel) {
-  const [show, setShow] = useState(false);
+ 
   return (
     <div
       className="container-fluid"
@@ -23,17 +22,18 @@ export function DisplayMovieData(props: displayMovieModel) {
               </tr>
             </thead>
             <tbody>
-              <MovieDetails data={props?.data} show={show}></MovieDetails>
+            
               {props?.data?.map((val) => (
                 <tr key={val.id}>
                   <td className="text-center align-middle">
                     <button
                       type="button"
                       className="btn btn-link"
-                      onClick={() => setShow(true)}
+                      onClick={() => val.show=true}
                     >
                       {val.title}
                     </button>
+                    {/* <MovieDetails data={val} show={val.show}></MovieDetails> */}
                   </td>
                   <td>
                     <img

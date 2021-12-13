@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { Button, Modal } from "react-bootstrap";
 import { displayMovieModel } from "../models/displayMovieModel";
+import { movieDetailModel } from "../models/movieDetailModel";
 import { movieImdbData } from "../models/movieExtraData";
 
- export function MovieDetails(props:displayMovieModel) {
+ export function MovieDetails(props:movieDetailModel) {
     const [model, setModel] = useState(props);
   
     const handleClose = () => setModel({...model,show:false});
