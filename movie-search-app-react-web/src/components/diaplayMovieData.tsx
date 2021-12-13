@@ -23,19 +23,20 @@ export function DisplayMovieData(props: displayMovieModel) {
     >
       <div className="row">
         <div className="col">
-          <table className="table table-bordered">
+          <table className="table table-striped table-hover">
             <thead>
               <tr>
                 <th>title</th>
                 <th>image</th>
-                <th>my rating</th>
+                <th>rating</th>
+                <th>year</th>
               </tr>
             </thead>
             <tbody>
               {props?.data?.map((val) => (
                 <tr key={val.id}>
-                  <td className="text-center align-middle">{val.title}</td>
-                  <td style={{ width: "55%" }}>
+                  <td className="text-center align-middle" ><button type="button" className="btn btn-link">{val.title}</button></td>
+                  <td >
                     <img
                       src={val.poster}
                       alt=""
@@ -50,6 +51,7 @@ export function DisplayMovieData(props: displayMovieModel) {
                       valueChange={(value)=>val.rating=value.toString()}
                     ></Rating>
                   </td>
+                  <td className="text-center align-middle">{val.year}</td>
                 </tr>
               ))}
             </tbody>

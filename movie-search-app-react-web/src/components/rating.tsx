@@ -16,8 +16,11 @@ export function Rating(props: ratingModel) {
   });
 
   return (
+   
     <Fragment>
-      {rating.map((r) => (
+     <div>{props.value}</div>
+      {
+      rating.map((r) => (
         <span
           key={r.id}
           className={`fa fa-star ${r.checked ? "checked" : ""}`}
