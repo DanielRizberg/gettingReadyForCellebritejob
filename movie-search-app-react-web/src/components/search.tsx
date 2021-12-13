@@ -55,7 +55,7 @@ export function Search(props: searchProps) {
           })
         )
       ),
-      mergeMap((value) => {
+      concatMap((value) => {
         return getDataForMovie(value);
       })
     
@@ -100,7 +100,12 @@ export function Search(props: searchProps) {
         }
       ).pipe(
         httpPipe(),
-        map((json: any) => json as movieImdbData)
+        map((json: any) => {
+          let response=json as movieImdbData;
+          response.title=response.title?response.title:x.title;
+          response.poster=response.poster?response.poster:x.image;
+          return response;
+        })
       )
     );
     let obs$ = forkJoin(observables);
