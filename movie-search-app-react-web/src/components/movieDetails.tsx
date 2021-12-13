@@ -1,20 +1,17 @@
 import { useState } from "react";
 import { Button, Modal } from "react-bootstrap";
+import { displayMovieModel } from "../models/displayMovieModel";
 import { movieImdbData } from "../models/movieExtraData";
 
-function MovieDetails(props:movieImdbData) {
-    const [show, setShow] = useState(false);
+ export function MovieDetails(props:displayMovieModel) {
+    const [model, setModel] = useState(props);
   
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
+    const handleClose = () => setModel({...model,show:false});
+    const handleShow = () => setModel({...model,show:true});
   
     return (
       <>
-        <Button variant="primary" onClick={handleShow}>
-          Launch demo modal
-        </Button>
-  
-        <Modal show={show} onHide={handleClose}>
+        <Modal show={props.show} onHide={handleClose}>
           <Modal.Header closeButton>
             <Modal.Title>Modal heading</Modal.Title>
           </Modal.Header>
@@ -23,9 +20,7 @@ function MovieDetails(props:movieImdbData) {
             <Button variant="secondary" onClick={handleClose}>
               Close
             </Button>
-            <Button variant="primary" onClick={handleClose}>
-              Save Changes
-            </Button>
+            
           </Modal.Footer>
         </Modal>
       </>

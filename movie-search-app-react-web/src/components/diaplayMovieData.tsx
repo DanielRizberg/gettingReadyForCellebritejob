@@ -1,21 +1,11 @@
+import { useState } from "react";
 import { displayMovieModel } from "../models/displayMovieModel";
 import { movieData } from "../models/movieData";
+import { MovieDetails } from "./movieDetails";
 import { Rating } from "./rating";
 
 export function DisplayMovieData(props: displayMovieModel) {
-  const getValueFromStorage = (movieTitle: string) => {
-    let value = localStorage.getItem(movieTitle);
-    if (value) {
-      return Number(value);
-    }
-
-    return 0;
-  };
-  function setRatingValue(val: movieData): (value: number) => void {
-    return (rating) => {
-      localStorage.setItem(val.title, rating.toString());
-    };
-  }
+  const [show, setShow] = useState(false);
   return (
     <div
       className="container-fluid"
@@ -33,10 +23,19 @@ export function DisplayMovieData(props: displayMovieModel) {
               </tr>
             </thead>
             <tbody>
+              <MovieDetails data={props?.data} show={show}></MovieDetails>
               {props?.data?.map((val) => (
                 <tr key={val.id}>
-                  <td className="text-center align-middle" ><button type="button" className="btn btn-link">{val.title}</button></td>
-                  <td >
+                  <td className="text-center align-middle">
+                    <button
+                      type="button"
+                      className="btn btn-link"
+                      onClick={() => setShow(true)}
+                    >
+                      {val.title}
+                    </button>
+                  </td>
+                  <td>
                     <img
                       src={val.poster}
                       alt=""
@@ -48,7 +47,7 @@ export function DisplayMovieData(props: displayMovieModel) {
                     <Rating
                       value={Number(val.rating)}
                       maxValue={10}
-                      valueChange={(value)=>val.rating=value.toString()}
+                      valueChange={(value) => (val.rating = value.toString())}
                     ></Rating>
                   </td>
                   <td className="text-center align-middle">{val.year}</td>
