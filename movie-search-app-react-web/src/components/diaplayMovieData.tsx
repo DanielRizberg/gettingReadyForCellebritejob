@@ -34,8 +34,9 @@ export function DisplayMovieData(props: displayMovieModel) {
                       type="button"
                       className="btn btn-link"
                       onClick={() => {
-                        showDetails[index].show = true;
-                        setShowDetails(showDetails);
+                        setShowDetails(
+                          handleShow(index,true)
+                        );
                       }}
                     >
                       {val.title}
@@ -43,8 +44,7 @@ export function DisplayMovieData(props: displayMovieModel) {
                     <MovieDetails
                       id={index}
                       handleClose={() => {
-                        showDetails[index].show = false;
-                        setShowDetails(showDetails);
+                        handleShow(index,false)
                       }}
                       data={val}
                       show={showDetails[index].show}
@@ -74,4 +74,11 @@ export function DisplayMovieData(props: displayMovieModel) {
       </div>
     </div>
   );
+
+  function handleShow(index: number,isShow:boolean) {
+    return showDetails.map((x, y) => y === index
+      ? Object.assign({}, { show: isShow })
+      : Object.assign({}, x)
+    );
+  }
 }
