@@ -3,13 +3,14 @@ import { Search } from "./components/search";
 import "./App.css";
 import { movieData } from "./models/movieData";
 import { DisplayMovieData } from "./components/diaplayMovieData";
+import { movieImdbData } from "./models/movieExtraData";
 
 function App() {
   const [stateValue, seStateValue] = useState({
-    data: [] as movieData[],
+    data: [] as movieImdbData[],
     loading: false,
   });
-  const newData = (val: Array<movieData>) => {
+  const newData = (val: Array<movieImdbData>) => {
    // console.log(val)
     seStateValue({  data: val, loading: false });
   };

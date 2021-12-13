@@ -1,19 +1,25 @@
 import React, { useEffect, useState } from "react";
+import { Observable } from "rx";
 
 import {
   catchError,
+  concatMap,
   distinctUntilChanged,
   filter,
+  forkJoin,
   fromEvent,
   map,
   merge,
+  mergeMap,
   of,
+  pipe,
   switchMap,
   tap,
   throttleTime,
 } from "rxjs";
 import { fromFetch } from "rxjs/fetch";
 import { movieData } from "../models/movieData";
+import { movieImdbData } from "../models/movieExtraData";
 
 import { searchProps } from "../models/searchModel";
 import "./search.css";
@@ -38,25 +44,28 @@ export function Search(props: searchProps) {
       filter((e) => (e as KeyboardEvent).key === "Enter"),
       map((x) => (x.target as any).value as string)
     );
-    const sub = merge(inputEvent, enterEvent, ClickEvent)
-      .pipe(
-        throttleTime(1000),
-        distinctUntilChanged(),
-        filter((x) => x !== ""),
-        switchMap((val) =>
-          getData(val).pipe(
-            tap(() => {
-              props.loaderHandler(true);
-            })
-          )
+    const obs$ = merge(inputEvent, enterEvent, ClickEvent).pipe(
+      filter((x) => x !== "" && x.length >= 3),
+      throttleTime(800),
+      distinctUntilChanged(),
+      switchMap((val) =>
+        getData(val).pipe(
+          tap(() => {
+            props.loaderHandler(true);
+          })
         )
-      )
-      .subscribe((value) => {
-        props.newData(value as any[]);
-      });
+      ),
+      mergeMap((value) => {
+        return getDataForMovie(value);
+      })
+    
+    );
+    const sub = obs$.subscribe((value) => {
+      props.newData(value as any[]);
+    });
 
     return () => sub.unsubscribe();
-  },[]);
+  }, []);
   const getData = (val: string) => {
     let obs$ = fromFetch(
       `https://imdb-internet-movie-database-unofficial.p.rapidapi.com/search/${val}`,
@@ -70,7 +79,36 @@ export function Search(props: searchProps) {
         },
       }
     ).pipe(
-      switchMap((res) => {
+      httpPipe(),
+      map((json: any) => json.titles as Array<movieData>)
+    );
+
+    return obs$;
+  };
+  const getDataForMovie = (movies: movieData[]) => {
+    let observables = movies.map((x) =>
+      fromFetch(
+        `https://imdb-internet-movie-database-unofficial.p.rapidapi.com/film/${x.id}`,
+        {
+          method: "GET",
+          headers: {
+            "x-rapidapi-host":
+              "imdb-internet-movie-database-unofficial.p.rapidapi.com",
+            "x-rapidapi-key":
+              "a5abc19a4bmsh6004678e99f8413p1a46a7jsn35b65af042e1",
+          },
+        }
+      ).pipe(
+        httpPipe(),
+        map((json: any) => json as movieImdbData)
+      )
+    );
+    let obs$ = forkJoin(observables);
+    return obs$;
+  };
+  const httpPipe = () =>
+    pipe(
+      switchMap((res: Response) => {
         if (res.ok) {
           return res.json();
         } else {
@@ -80,15 +118,11 @@ export function Search(props: searchProps) {
           });
         }
       }),
-      map((json) => json.titles as Array<movieData>),
       catchError((err) => {
         console.error(err);
         return of({ error: true, message: err.message });
       })
     );
-
-    return obs$;
-  };
   return (
     <div className="container-fluid">
       <div className="row">
@@ -104,7 +138,6 @@ export function Search(props: searchProps) {
             </button>
 
             <input
-          
               type="text"
               placeholder="type here to search a movie"
               className="form-control "
@@ -116,7 +149,6 @@ export function Search(props: searchProps) {
                 setSearchValue(e.target.value);
               }}
             ></input>
-        
           </div>
         </div>
       </div>

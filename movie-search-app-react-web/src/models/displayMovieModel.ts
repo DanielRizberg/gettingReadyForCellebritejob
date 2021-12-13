@@ -1,5 +1,6 @@
 import { movieData } from "./movieData";
+import { movieImdbData } from "./movieExtraData";
 
 export interface displayMovieModel{
-    data:movieData[];
+    data:movieImdbData[];
 }

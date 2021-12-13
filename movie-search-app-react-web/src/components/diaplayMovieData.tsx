@@ -37,7 +37,7 @@ export function DisplayMovieData(props: displayMovieModel) {
                   <td className="text-center align-middle">{val.title}</td>
                   <td style={{ width: "55%" }}>
                     <img
-                      src={val.image}
+                      src={val.poster}
                       alt=""
                       className="img img-thumbnail img-fluid"
                       style={{ height: "45vh" }}
@@ -45,9 +45,9 @@ export function DisplayMovieData(props: displayMovieModel) {
                   </td>
                   <td className="text-center align-middle">
                     <Rating
-                      value={getValueFromStorage(val.title)}
-                      maxValue={5}
-                      valueChange={setRatingValue(val)}
+                      value={Number(val.rating)}
+                      maxValue={10}
+                      valueChange={(value)=>val.rating=value.toString()}
                     ></Rating>
                   </td>
                 </tr>
