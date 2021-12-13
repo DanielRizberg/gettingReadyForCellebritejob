@@ -9,7 +9,13 @@ export function DisplayMovieData(props: displayMovieModel) {
       return { show: false };
     })
   );
+  function handleShow(index: number, isShow: boolean) {
+    let retVal = showDetails.map((x, y) =>
+      y === index ? Object.assign({}, { show: isShow }) : Object.assign({}, x)
+    );
 
+    return retVal;
+  }
   return (
     <div
       className="container-fluid"
@@ -34,9 +40,7 @@ export function DisplayMovieData(props: displayMovieModel) {
                       type="button"
                       className="btn btn-link"
                       onClick={() => {
-                        setShowDetails(
-                          handleShow(index,true)
-                        );
+                        setShowDetails(handleShow(index, true));
                       }}
                     >
                       {val.title}
@@ -44,7 +48,7 @@ export function DisplayMovieData(props: displayMovieModel) {
                     <MovieDetails
                       id={index}
                       handleClose={() => {
-                        handleShow(index,false)
+                        setShowDetails(handleShow(index, false));
                       }}
                       data={val}
                       show={showDetails[index].show}
@@ -74,11 +78,4 @@ export function DisplayMovieData(props: displayMovieModel) {
       </div>
     </div>
   );
-
-  function handleShow(index: number,isShow:boolean) {
-    return showDetails.map((x, y) => y === index
-      ? Object.assign({}, { show: isShow })
-      : Object.assign({}, x)
-    );
-  }
 }
