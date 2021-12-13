@@ -21,5 +21,5 @@ export interface movieImdbData {
     trailer: Trailer;
     cast: Cast[];
     technical_specs: string[][];
-    show:boolean;
+    
 }

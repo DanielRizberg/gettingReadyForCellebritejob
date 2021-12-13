@@ -4,7 +4,12 @@ import { MovieDetails } from "./movieDetails";
 import { Rating } from "./rating";
 
 export function DisplayMovieData(props: displayMovieModel) {
- 
+  const [showDetails, setShowDetails] = useState(
+    props.data.map((x) => {
+      return { show: false };
+    })
+  );
+
   return (
     <div
       className="container-fluid"
@@ -22,18 +27,28 @@ export function DisplayMovieData(props: displayMovieModel) {
               </tr>
             </thead>
             <tbody>
-            
-              {props?.data?.map((val) => (
+              {props?.data?.map((val, index) => (
                 <tr key={val.id}>
                   <td className="text-center align-middle">
                     <button
                       type="button"
                       className="btn btn-link"
-                      onClick={() => val.show=true}
+                      onClick={() => {
+                        showDetails[index].show = true;
+                        setShowDetails(showDetails);
+                      }}
                     >
                       {val.title}
                     </button>
-                    {/* <MovieDetails data={val} show={val.show}></MovieDetails> */}
+                    <MovieDetails
+                      id={index}
+                      handleClose={() => {
+                        showDetails[index].show = false;
+                        setShowDetails(showDetails);
+                      }}
+                      data={val}
+                      show={showDetails[index].show}
+                    ></MovieDetails>
                   </td>
                   <td>
                     <img

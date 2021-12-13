@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Search } from "./components/search";
 import "./App.css";
-import { movieData } from "./models/movieData";
+
 import { DisplayMovieData } from "./components/diaplayMovieData";
 import { movieImdbData } from "./models/movieExtraData";
 

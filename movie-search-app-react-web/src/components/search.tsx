@@ -104,6 +104,7 @@ export function Search(props: searchProps) {
           let response=json as movieImdbData;
           response.title=response.title?response.title:x.title;
           response.poster=response.poster?response.poster:x.image;
+        
           return response;
         })
       )
