@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Observable } from "rx";
+
 
 import {
   catchError,
@@ -10,7 +10,7 @@ import {
   fromEvent,
   map,
   merge,
-  mergeMap,
+
   of,
   pipe,
   switchMap,
@@ -28,6 +28,7 @@ export function Search(props: searchProps) {
 
   const textEl = React.useRef<HTMLInputElement>(null);
   const buttonEl = React.useRef<HTMLButtonElement>(null);
+  
   useEffect(() => {
     const ClickEvent = fromEvent(
       buttonEl.current as HTMLInputElement,
@@ -61,6 +62,7 @@ export function Search(props: searchProps) {
     
     );
     const sub = obs$.subscribe((value) => {
+    
       props.newData(value as any[]);
     });
 
@@ -161,3 +163,7 @@ export function Search(props: searchProps) {
     </div>
   );
 }
+function useHistory() {
+  throw new Error("Function not implemented.");
+}
+
