@@ -1,5 +1,5 @@
+import { error } from "console";
 import React, { useEffect, useState } from "react";
-
 
 import {
   catchError,
@@ -10,7 +10,6 @@ import {
   fromEvent,
   map,
   merge,
-
   of,
   pipe,
   switchMap,
@@ -28,7 +27,7 @@ export function Search(props: searchProps) {
 
   const textEl = React.useRef<HTMLInputElement>(null);
   const buttonEl = React.useRef<HTMLButtonElement>(null);
-  
+
   useEffect(() => {
     const ClickEvent = fromEvent(
       buttonEl.current as HTMLInputElement,
@@ -59,10 +58,8 @@ export function Search(props: searchProps) {
       concatMap((value) => {
         return getDataForMovie(value);
       })
-    
     );
     const sub = obs$.subscribe((value) => {
-    
       props.newData(value as any[]);
     });
 
@@ -88,31 +85,35 @@ export function Search(props: searchProps) {
     return obs$;
   };
   const getDataForMovie = (movies: movieData[]) => {
-    let observables = movies?movies.map((x) =>
-      fromFetch(
-        `https://imdb-internet-movie-database-unofficial.p.rapidapi.com/film/${x.id}`,
-        {
-          method: "GET",
-          headers: {
-            "x-rapidapi-host":
-              "imdb-internet-movie-database-unofficial.p.rapidapi.com",
-            "x-rapidapi-key":
-              "a5abc19a4bmsh6004678e99f8413p1a46a7jsn35b65af042e1",
-          },
-        }
-      ).pipe(
-        httpPipe(),
-        map((json: any) => {
-          let response=json as movieImdbData;
-          response.title=response.title?response.title:x.title;
-          response.poster=response.poster?response.poster:x.image;
-        
-          return response;
-        })
-      )
-    ):of([]);
-    let obs$ = forkJoin(observables);
-    return obs$;
+    try {
+      let observables = movies.map((x) =>
+        fromFetch(
+          `https://imdb-internet-movie-database-unofficial.p.rapidapi.com/film/${x.id}`,
+          {
+            method: "GET",
+            headers: {
+              "x-rapidapi-host":
+                "imdb-internet-movie-database-unofficial.p.rapidapi.com",
+              "x-rapidapi-key":
+                "a5abc19a4bmsh6004678e99f8413p1a46a7jsn35b65af042e1",
+            },
+          }
+        ).pipe(
+          httpPipe(),
+          map((json: any) => {
+            let response = json as movieImdbData;
+            response.title = response.title ? response.title : x.title;
+            response.poster = response.poster ? response.poster : x.image;
+
+            return response;
+          })
+        )
+      );
+      let obs$ = forkJoin(observables);
+      return obs$;
+    } catch (error: any) {
+      return of({ error: true, message: error.message });
+    }
   };
   const httpPipe = () =>
     pipe(
@@ -163,7 +164,3 @@ export function Search(props: searchProps) {
     </div>
   );
 }
-function useHistory() {
-  throw new Error("Function not implemented.");
-}
-
