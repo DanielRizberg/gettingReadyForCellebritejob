@@ -15,9 +15,7 @@ export function MovieDetails(props: movieDetailModel) {
           <Modal.Title>Movie Details</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-   
-          <div className="container-fluid" >
-           
+          <div className="container-fluid">
             <div className="row">
               <div className="col">
                 <h6> plot:</h6>
@@ -32,17 +30,28 @@ export function MovieDetails(props: movieDetailModel) {
                 </p>
               </div>
             </div>
-            <div className="row mb-4" >
-              <div className="col">
-                <h5>trailer link</h5>
-                <a href={props.data.trailer.link} target="_blank" rel="noreferrer" >{props.data.trailer.link}</a>
+            {props.data.trailer?.link ? (
+              <div className="row mb-4">
+                <div className="col">
+                  <h5>trailer link</h5>
+                  <a
+                    href={props.data.trailer.link}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    {props.data.trailer.link}
+                  </a>
+                </div>
               </div>
-              
-            </div>
+            ) : null}
           </div>
-          <img className="img-thumbnail img-fluid text-center" src={props.data.poster} alt="" style={{margin:'auto',height:'50vh'}} />
+          <img
+            className="img-thumbnail img-fluid text-center"
+            src={props.data.poster}
+            alt=""
+            style={{ margin: "auto", height: "50vh" }}
+          />
         </Modal.Body>
-      
       </Modal>
     </>
   );
