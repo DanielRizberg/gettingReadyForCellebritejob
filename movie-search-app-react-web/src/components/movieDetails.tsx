@@ -3,6 +3,7 @@ import "bootstrap/dist/css/bootstrap.css";
 import { movieDetailModel } from "../models/movieDetailModel";
 
 export function MovieDetails(props: movieDetailModel) {
+  const imdbLink = `http://www.imdb.com/video/imdb/${props.data.trailer.id}/imdb/embed?autoplay=false&width=480`;
   return (
     <>
       <Modal
@@ -30,27 +31,37 @@ export function MovieDetails(props: movieDetailModel) {
                 </p>
               </div>
             </div>
-            {props.data.trailer?.link ? (
-              <div className="row mb-4">
+            <div className="row mb-4">
+              {props.data.trailer?.id ? (
                 <div className="col">
                   <h5>trailer link</h5>
-                  <a
+                  {/* <a
                     href={props.data.trailer.link}
                     target="_blank"
                     rel="noreferrer"
                   >
                     {props.data.trailer.link}
-                  </a>
+                  </a> */}
+
+                  <iframe
+                    src={imdbLink}
+                    title="trailer"
+                    width="480"
+                    height="270"
+                    allowFullScreen={true}
+                  ></iframe>
                 </div>
+              ) : null}
+              <div className="col">
+                <img
+                  className="img-thumbnail img-fluid text-center"
+                  src={props.data.poster}
+                  alt=""
+                  style={{ margin: "auto", height: "50vh" }}
+                />
               </div>
-            ) : null}
+            </div>
           </div>
-          <img
-            className="img-thumbnail img-fluid text-center"
-            src={props.data.poster}
-            alt=""
-            style={{ margin: "auto", height: "50vh" }}
-          />
         </Modal.Body>
       </Modal>
     </>
