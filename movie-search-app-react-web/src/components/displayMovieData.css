@@ -1,0 +1,5 @@
+thead th { position: sticky; top: 0; }
+
+.data-btn{
+    font-size: inherit!important;
+}

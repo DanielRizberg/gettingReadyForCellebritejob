@@ -2,7 +2,7 @@ import { useState } from "react";
 import { displayMovieModel } from "../models/displayMovieModel";
 import { MovieDetails } from "./movieDetails";
 import { Rating } from "./rating";
-
+import './displayMovieData.css';
 export function DisplayMovieData(props: displayMovieModel) {
   const [showDetails, setShowDetails] = useState(
     props.data.map((x) => {
@@ -23,7 +23,7 @@ export function DisplayMovieData(props: displayMovieModel) {
     >
       <div className="row">
         <div className="col">
-          <table className="table table-striped table-hover">
+          <table className="table  table-hover">
             <thead>
               <tr>
                 <th>title</th>
@@ -37,8 +37,9 @@ export function DisplayMovieData(props: displayMovieModel) {
                 <tr key={val.id}>
                   <td className="text-center align-middle">
                     <button
+                  
                       type="button"
-                      className="btn btn-link"
+                      className="btn btn-link data-btn"
                       onClick={() => {
                         setShowDetails(handleShow(index, true));
                       }}
