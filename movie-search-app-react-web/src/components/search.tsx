@@ -86,7 +86,7 @@ export function Search(props: searchProps) {
     return obs$;
   };
   const getDataForMovie = (movies: movieData[]) => {
-    let observables = movies.map((x) =>
+    let observables = movies?movies.map((x) =>
       fromFetch(
         `https://imdb-internet-movie-database-unofficial.p.rapidapi.com/film/${x.id}`,
         {
@@ -108,7 +108,7 @@ export function Search(props: searchProps) {
           return response;
         })
       )
-    );
+    ):of([]);
     let obs$ = forkJoin(observables);
     return obs$;
   };

@@ -35,13 +35,7 @@ export function MovieDetails(props: movieDetailModel) {
               {props.data.trailer?.id ? (
                 <div className="col">
                   <h5>trailer link</h5>
-                  {/* <a
-                    href={props.data.trailer.link}
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    {props.data.trailer.link}
-                  </a> */}
+                 
 
                   <iframe
                     src={imdbLink}
