@@ -29,7 +29,7 @@ export function MovieDetails(props: movieDetailModel) {
                 ) : null}
               </div>
               <div className="col">
-                {props.data?.cast ? (
+                {props.data?.cast && props.data?.cast?.length>0? (
                   <>
                     <h6> cast:</h6>
                     <p>
