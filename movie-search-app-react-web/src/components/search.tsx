@@ -84,6 +84,9 @@ export function Search(props: searchProps) {
     return obs$;
   };
   const getDataForMovie = (movies: movieData[]) => {
+    if (movies.length === 0) {
+      return of([]);
+    }
     try {
       let observables = movies.map((x) =>
         fromFetch(
@@ -111,6 +114,7 @@ export function Search(props: searchProps) {
       let obs$ = forkJoin(observables);
       return obs$;
     } catch (error: any) {
+      console.log(error);
       return of({ error: true, message: error.message });
     }
   };

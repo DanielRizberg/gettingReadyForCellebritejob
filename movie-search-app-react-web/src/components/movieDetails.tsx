@@ -1,6 +1,8 @@
-import { Button, Modal } from "react-bootstrap";
+import { Modal } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.css";
 import { movieDetailModel } from "../models/movieDetailModel";
+import theater from "../assets/theater.jpg";
+import ImageWithFallback from "./imageWithFallBack";
 
 export function MovieDetails(props: movieDetailModel) {
   const imdbLink = `http://www.imdb.com/video/imdb/${props.data.trailer.id}/imdb/embed?autoplay=false&width=480`;
@@ -35,7 +37,6 @@ export function MovieDetails(props: movieDetailModel) {
               {props.data.trailer?.id ? (
                 <div className="col">
                   <h5>trailer link</h5>
-                 
 
                   <iframe
                     src={imdbLink}
@@ -47,10 +48,10 @@ export function MovieDetails(props: movieDetailModel) {
                 </div>
               ) : null}
               <div className="col">
-                <img
+                <ImageWithFallback
+                  fallback={theater}
                   className="img-thumbnail img-fluid text-center"
                   src={props.data.poster}
-                  alt=""
                   style={{ margin: "auto", height: "50vh" }}
                 />
               </div>

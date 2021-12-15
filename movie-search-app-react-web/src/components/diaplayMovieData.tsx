@@ -2,7 +2,9 @@ import { useState } from "react";
 import { displayMovieModel } from "../models/displayMovieModel";
 import { MovieDetails } from "./movieDetails";
 import { Rating } from "./rating";
-import './displayMovieData.css';
+import "./displayMovieData.css";
+import theater from "../assets/theater.jpg";
+import ImageWithFallback from "./imageWithFallBack";
 export function DisplayMovieData(props: displayMovieModel) {
   const [showDetails, setShowDetails] = useState(
     props.data.map((x) => {
@@ -37,7 +39,6 @@ export function DisplayMovieData(props: displayMovieModel) {
                 <tr key={val.id}>
                   <td className="text-center align-middle">
                     <button
-                  
                       type="button"
                       className="btn btn-link data-btn"
                       onClick={() => {
@@ -56,9 +57,10 @@ export function DisplayMovieData(props: displayMovieModel) {
                     ></MovieDetails>
                   </td>
                   <td>
-                    <img
+                    <ImageWithFallback
                       src={val.poster}
-                      alt=""
+                     fallback={theater}
+                      alt="resource not found"
                       className="img img-thumbnail img-fluid"
                       style={{ height: "45vh" }}
                     />
