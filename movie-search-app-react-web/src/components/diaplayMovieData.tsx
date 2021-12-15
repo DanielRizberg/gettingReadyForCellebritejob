@@ -36,11 +36,12 @@ export function DisplayMovieData(props: displayMovieModel) {
             </thead>
             <tbody>
               {props?.data?.map((val, index) => (
-                <tr key={val.id}>
+                <tr key={val.id} >
                   <td className="text-center align-middle">
                     <button
+                    title="click me to get more details"
                       type="button"
-                      className="btn btn-link data-btn"
+                      className="btn btn-link data-btn "
                       onClick={() => {
                         setShowDetails(handleShow(index, true));
                       }}
@@ -59,18 +60,26 @@ export function DisplayMovieData(props: displayMovieModel) {
                   <td>
                     <ImageWithFallback
                       src={val.poster}
-                     fallback={theater}
+                      fallback={theater}
                       alt="resource not found"
                       className="img img-thumbnail img-fluid"
                       style={{ height: "45vh" }}
                     />
                   </td>
                   <td className="text-center align-middle">
-                    <Rating
-                      value={Number(val.rating)}
-                      maxValue={10}
-                      valueChange={(value) => (val.rating = value.toString())}
-                    ></Rating>
+                    {val.rating ? (
+                      <>
+                    
+                        <Rating
+                          value={Number(val.rating)}
+                          maxValue={10}
+                          valueChange={(value) =>
+                            (val.rating = value.toString())
+                          }
+                        ></Rating>
+                        <p> rating votes : {val.rating_votes}</p>
+                      </>
+                    ) : null}
                   </td>
                   <td className="text-center align-middle">{val.year}</td>
                 </tr>

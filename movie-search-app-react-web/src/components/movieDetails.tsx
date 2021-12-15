@@ -21,16 +21,24 @@ export function MovieDetails(props: movieDetailModel) {
           <div className="container-fluid">
             <div className="row">
               <div className="col">
-                <h6> plot:</h6>
-                <p>{props.data.plot}</p>
+                {props.data?.plot ? (
+                  <>
+                    <h6> plot:</h6>
+                    <p>{props.data.plot}</p>
+                  </>
+                ) : null}
               </div>
               <div className="col">
-                <h6> cast:</h6>
-                <p>
-                  {props.data.cast
-                    .map((x) => `${x.actor}  as :${x.character} .`)
-                    .join(" \n")}
-                </p>
+                {props.data?.cast ? (
+                  <>
+                    <h6> cast:</h6>
+                    <p>
+                      {props.data.cast
+                        .map((x) => `${x.actor}  as :${x.character} .`)
+                        .join(" \n")}
+                    </p>
+                  </>
+                ) : null}
               </div>
             </div>
             <div className="row mb-4">
