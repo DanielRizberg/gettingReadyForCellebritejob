@@ -9,13 +9,14 @@ function App() {
   const [stateValue, seStateValue] = useState({
     data: [] as movieImdbData[],
     loading: false,
+    showAppImageIntro: true,
   });
   const newData = (val: Array<movieImdbData>) => {
-   // console.log(val)
-    seStateValue({  data: val, loading: false });
+    // console.log(val)
+    seStateValue({ ...stateValue, data: val, loading: false });
   };
   const loaderHandler = (val: boolean) => {
-  //  console.log(val)
+    //  console.log(val)
     seStateValue({ ...stateValue, loading: val });
   };
   return (

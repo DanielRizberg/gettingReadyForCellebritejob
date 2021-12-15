@@ -13,9 +13,7 @@ import {
   of,
   pipe,
   switchMap,
-  take,
   tap,
-  throttleTime,
 } from "rxjs";
 import { fromFetch } from "rxjs/fetch";
 import { movieData } from "../models/movieData";
@@ -45,7 +43,7 @@ export function Search(props: searchProps) {
       filter((e) => (e as KeyboardEvent).key === "Enter"),
       map((x) => (x.target as any).value as string)
     );
-    const obs$ = merge(inputEvent, enterEvent, ClickEvent).pipe( 
+    const obs$ = merge(inputEvent, enterEvent, ClickEvent).pipe(
       filter((x) => x !== "" && x.length >= 3),
       debounceTime(1000),
       distinctUntilChanged(),
@@ -67,7 +65,6 @@ export function Search(props: searchProps) {
     return () => sub.unsubscribe();
   }, []);
   const getData = (val: string) => {
-   
     let obs$ = fromFetch(
       `https://imdb-internet-movie-database-unofficial.p.rapidapi.com/search/${val}`,
       {
