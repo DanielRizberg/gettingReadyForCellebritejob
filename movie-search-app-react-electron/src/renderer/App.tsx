@@ -1,50 +1,44 @@
-import { MemoryRouter as Router, Routes, Route } from 'react-router-dom';
-import icon from '../../assets/icon.svg';
-import './App.css';
+import { DisplayMovieData } from 'components/diaplayMovieData';
+import { Search } from 'components/search';
+import { movieImdbData } from 'models/movieExtraData';
+import { useState } from 'react';
 
-const Hello = () => {
+function App() {
+  const [stateValue, seStateValue] = useState({
+    data: [] as movieImdbData[],
+    loading: false,
+    showAppImageIntro: true,
+  });
+  const newData = (val: Array<movieImdbData>) => {
+    // console.log(val)
+    seStateValue({ ...stateValue, data: val, loading: false });
+  };
+  const loaderHandler = (val: boolean) => {
+    //  console.log(val)
+    seStateValue({ ...stateValue, loading: val });
+  };
   return (
-    <div>
-      <div className="Hello">
-        <img width="200px" alt="icon" src={icon} />
-      </div>
-      <h1>electron-react-boilerplate</h1>
-      <div className="Hello">
-        <a
-          href="https://electron-react-boilerplate.js.org/"
-          target="_blank"
-          rel="noreferrer"
-        >
-          <button type="button">
-            <span role="img" aria-label="books">
-              📚
-            </span>
-            Read our docs
-          </button>
-        </a>
-        <a
-          href="https://github.com/sponsors/electron-react-boilerplate"
-          target="_blank"
-          rel="noreferrer"
-        >
-          <button type="button">
-            <span role="img" aria-label="books">
-              🙏
-            </span>
-            Donate
-          </button>
-        </a>
-      </div>
+    <div className="App">
+      <Search newData={newData} loaderHandler={loaderHandler} />
+      {!stateValue.loading ? (
+        <DisplayMovieData data={stateValue.data} />
+      ) : (
+        <div className="spinner-border" role="status">
+          <span className="visually-hidden">Loading...</span>
+        </div>
+      )}
     </div>
   );
-};
-
-export default function App() {
-  return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<Hello />} />
-      </Routes>
-    </Router>
-  );
 }
+
+export default App;
+
+// export default function App() {
+//   return (
+//     <Router>
+//       <Routes>
+//         <Route path="/" element={<Hello />} />
+//       </Routes>
+//     </Router>
+//   );
+// }
