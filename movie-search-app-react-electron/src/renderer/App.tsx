@@ -11,7 +11,7 @@ function App() {
   });
   const newData = (val: Array<movieImdbData>) => {
     // console.log(val)
-    seStateValue({ ...stateValue, data: val, loading: false });
+   seStateValue({ ...stateValue, data: val, loading: false });
   };
   const loaderHandler = (val: boolean) => {
     //  console.log(val)
@@ -23,8 +23,10 @@ function App() {
       {!stateValue.loading ? (
         <DisplayMovieData data={stateValue.data} />
       ) : (
-        <div className="spinner-border" role="status">
+        <div className="d-flex justify-content-center">
+        <div className="spinner-border m-auto" role="status">
           <span className="visually-hidden">Loading...</span>
+        </div>
         </div>
       )}
     </div>
