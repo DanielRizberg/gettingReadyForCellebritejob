@@ -19,7 +19,8 @@ mono_crash.*
 # Build results
 [Dd]ebug/
 [Dd]ebugPublic/
-[Rr]elease/
+[Rr]elease/*
+!movie-search-app-react-electron/release/app
 [Rr]eleases/
 x64/
 x86/
