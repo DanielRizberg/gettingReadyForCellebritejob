@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from "react";
-
+import React, { useEffect, useState } from 'react';
 import {
   catchError,
   concatMap,
@@ -14,15 +13,17 @@ import {
   pipe,
   switchMap,
   tap,
-} from "rxjs";
-import { fromFetch } from "rxjs/fetch";
-import { movieData } from "../models/movieData";
-import { movieImdbData } from "../models/movieExtraData";
+} from 'rxjs';
+import { fromFetch } from 'rxjs/fetch';
+import rapidApiKey from '../rapidApiKey';
+import { movieData } from '../models/movieData';
+import { movieImdbData } from '../models/movieExtraData';
 
-import { searchProps } from "../models/searchModel";
-import "./search.css";
+import { searchProps } from '../models/searchModel';
+import './search.css';
+// eslint-disable-next-line import/prefer-default-export
 export function Search(props: searchProps) {
-  const [searchValue, setSearchValue] = useState("");
+  const [searchValue, setSearchValue] = useState('');
 
   const textEl = React.useRef<HTMLInputElement>(null);
   const buttonEl = React.useRef<HTMLButtonElement>(null);
@@ -30,21 +31,21 @@ export function Search(props: searchProps) {
   useEffect(() => {
     const ClickEvent = fromEvent(
       buttonEl.current as HTMLInputElement,
-      "click"
+      'click'
     ).pipe(map((x) => searchValue));
     const inputEvent = fromEvent(
       textEl.current as HTMLInputElement,
-      "input"
+      'input'
     ).pipe(map((x) => (x.target as any).value as string));
     const enterEvent = fromEvent(
       textEl.current as HTMLInputElement,
-      "keyup"
+      'keyup'
     ).pipe(
-      filter((e) => (e as KeyboardEvent).key === "Enter"),
+      filter((e) => (e as KeyboardEvent).key === 'Enter'),
       map((x) => (x.target as any).value as string)
     );
     const obs$ = merge(inputEvent, enterEvent, ClickEvent).pipe(
-      filter((x) => x !== "" && x.length >= 3),
+      filter((x) => x !== '' && x.length >= 3),
       debounceTime(1000),
       distinctUntilChanged(),
       switchMap((val) =>
@@ -68,12 +69,11 @@ export function Search(props: searchProps) {
     let obs$ = fromFetch(
       `https://imdb-internet-movie-database-unofficial.p.rapidapi.com/search/${val}`,
       {
-        method: "GET",
+        method: 'GET',
         headers: {
-          "x-rapidapi-host":
-            "imdb-internet-movie-database-unofficial.p.rapidapi.com",
-          "x-rapidapi-key":
-            "a5abc19a4bmsh6004678e99f8413p1a46a7jsn35b65af042e1",
+          'x-rapidapi-host':
+            'imdb-internet-movie-database-unofficial.p.rapidapi.com',
+          'x-rapidapi-key': rapidApiKey(),
         },
       }
     ).pipe(
@@ -92,12 +92,11 @@ export function Search(props: searchProps) {
         fromFetch(
           `https://imdb-internet-movie-database-unofficial.p.rapidapi.com/film/${x.id}`,
           {
-            method: "GET",
+            method: 'GET',
             headers: {
-              "x-rapidapi-host":
-                "imdb-internet-movie-database-unofficial.p.rapidapi.com",
-              "x-rapidapi-key":
-                "a5abc19a4bmsh6004678e99f8413p1a46a7jsn35b65af042e1",
+              'x-rapidapi-host':
+                'imdb-internet-movie-database-unofficial.p.rapidapi.com',
+              'x-rapidapi-key': rapidApiKey(),
             },
           }
         ).pipe(

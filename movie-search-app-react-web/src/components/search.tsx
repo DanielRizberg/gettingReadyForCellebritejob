@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-
+import rapidApiKey from "../rapidApiKey";
 import {
   catchError,
   concatMap,
@@ -73,7 +73,7 @@ export function Search(props: searchProps) {
           "x-rapidapi-host":
             "imdb-internet-movie-database-unofficial.p.rapidapi.com",
           "x-rapidapi-key":
-            "a5abc19a4bmsh6004678e99f8413p1a46a7jsn35b65af042e1",
+            rapidApiKey(),
         },
       }
     ).pipe(
@@ -97,7 +97,7 @@ export function Search(props: searchProps) {
               "x-rapidapi-host":
                 "imdb-internet-movie-database-unofficial.p.rapidapi.com",
               "x-rapidapi-key":
-                "a5abc19a4bmsh6004678e99f8413p1a46a7jsn35b65af042e1",
+                rapidApiKey(),
             },
           }
         ).pipe(

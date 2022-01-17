@@ -41,7 +41,7 @@ namespace playGroundWPF
         {
             var builder = new ConfigurationBuilder()
         .SetBasePath(Directory.GetCurrentDirectory())
-        .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
+        .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true).AddUserSecrets("a222d628-56ff-48bd-98f0-dcb7a877d8c6", false);
 
             Configuration = builder.Build();
         }
